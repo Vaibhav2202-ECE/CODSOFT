@@ -1,0 +1,41 @@
+THIS CODE CONTAINS THE FILES THAT CONTAINS THE NUMBER OF WORDS IN A GIVEN TEXT FILE.
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+int countWords(const std::string& text) {
+    std::istringstream iss(text);
+    int wordCount = 0;
+    std::string word;
+    while (iss >> word) {
+        ++wordCount;
+    }
+    return wordCount;
+}
+
+int main() {
+    std::string filename;
+    std::cout << "Enter the name of the text file: ";
+    std::getline(std::cin, filename);
+
+    std::ifstream file(filename);
+    if (!file) {
+        std::cout << "Failed to open the file: " << filename << std::endl;
+        return 1;
+    }
+
+    std::string line;
+    std::string fileContent;
+    while (std::getline(file, line)) {
+        fileContent += line + " ";
+    }
+
+    int wordCount = countWords(fileContent);
+    std::cout << "Total word count in file '" << filename << "': " << wordCount << std::endl;
+
+    file.close();
+
+    return 0;
+}
