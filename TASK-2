@@ -1,1 +1,48 @@
-#THIS FILE CONTAINS C++ CODE OF STUDENT GRADING SYSTEM
+#THIS FILE CONTAINS C++ CODE OF STUDENT GRADING SYSTEM.
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+struct Student {
+    std::string name;
+    int grade;
+};
+int main() {
+    std::vector<Student> students;
+    std::string name;
+    int grade;
+    
+    // Input student names and grades
+    while (true) {
+        std::cout << "Enter student name (or 'q' to quit): ";
+        std::getline(std::cin, name);
+        if (name == "q")
+            break;
+        std::cout << "Enter grade for " << name << ": ";
+        std::cin >> grade;
+        std::cin.ignore(); // Ignore the newline character
+        students.push_back({name, grade});
+    }
+    int sum = 0;
+    for (const auto& student : students) {
+        sum += student.grade;
+    }
+    double average = static_cast<double>(sum) / students.size();
+
+    auto minMaxGrade = std::minmax_element(students.begin(), students.end(),
+        [](const Student& a, const Student& b) {
+            return a.grade < b.grade;
+        }
+    );
+    int minGrade = minMaxGrade.first->grade;
+    int maxGrade = minMaxGrade.second->grade;
+
+    std::cout << "Average grade: " << average << std::endl;
+    std::cout << "Highest grade: " << maxGrade << std::endl;
+    std::cout << "Lowest grade: " << minGrade << std::endl;
+
+    return 0;
+}
+
